@@ -4,6 +4,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -34,6 +36,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += "-opt-in=androidx.compose.animation.ExperimentalAnimationApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi"
+        freeCompilerArgs += "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
     }
     buildFeatures {
         compose true
@@ -50,12 +55,36 @@ android {
 
 dependencies {
 
+    implementation KotlinX.coroutines.android
+
     implementation AndroidX.core.ktx
     implementation AndroidX.compose.ui
+    implementation AndroidX.compose.runtime.liveData
     implementation AndroidX.compose.material
     implementation AndroidX.compose.ui.toolingPreview
-    implementation AndroidX.lifecycle.runtime.ktx
+    implementation AndroidX.paging.compose
+    implementation AndroidX.dataStore.preferences
+
     implementation AndroidX.activity.compose
+    implementation AndroidX.lifecycle.runtime.ktx
+    implementation AndroidX.lifecycle.liveDataKtx
+    implementation AndroidX.lifecycle.viewModelCompose
+    implementation AndroidX.navigation.compose
+    implementation AndroidX.hilt.navigationCompose
+
+    implementation Square.okHttp3.okHttp
+    implementation Square.okHttp3.loggingInterceptor
+    implementation Square.retrofit2.retrofit
+    implementation Square.retrofit2.converter.moshi
+    implementation Square.moshi.kotlinReflect
+    kapt Square.moshi.kotlinCodegen
+
+    implementation Google.Accompanist.navigationAnimation
+    implementation Google.dagger.hilt.android
+    kapt Google.dagger.hilt.compiler
+
+    implementation "com.github.haroldadmin:NetworkResponseAdapter:_"
+
     testImplementation Testing.junit4
     androidTestImplementation AndroidX.test.ext.junit
     androidTestImplementation AndroidX.test.espresso.core
