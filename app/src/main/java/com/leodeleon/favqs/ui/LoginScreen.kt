@@ -27,23 +27,31 @@ fun LoginScreen(
     val scaffoldState = rememberScaffoldState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val state = viewModel.state
-    var user by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
-    var password by rememberSaveable(stateSaver = TextFieldValue.Saver) { mutableStateOf(TextFieldValue("")) }
+    var user by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(
+            TextFieldValue(
+                ""
+            )
+        )
+    }
+    var password by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(
+            TextFieldValue("")
+        )
+    }
 
-    when (state.value) {
-        LoginUiState.Error -> {
-            LaunchedEffect(scaffoldState.snackbarHostState) {
-                scaffoldState.snackbarHostState.showSnackbar(
-                    message = "Try again",
-                )
+    LaunchedEffect(scaffoldState.snackbarHostState) {
+        when (state.value) {
+            LoginUiState.Error -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = "Try again",
+                    )
             }
-        }
-        LoginUiState.Success -> {
-            LaunchedEffect("onNext") {
-                onNext()
+            LoginUiState.Success -> {
+                    onNext()
             }
+            else -> {} //Do Nothing
         }
-        else -> {} //Do Nothing
     }
 
     Scaffold(scaffoldState = scaffoldState) {
@@ -55,8 +63,6 @@ fun LoginScreen(
                 .fillMaxSize()
                 .padding(it)
         ) {
-
-
             Text(
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.h4,
@@ -94,7 +100,8 @@ fun LoginScreen(
             Button(
                 modifier = Modifier
                     .fillMaxWidth(0.7f)
-                    .height(44.dp), contentPadding = PaddingValues(top = 0.dp),
+                    .height(44.dp),
+                contentPadding = PaddingValues(top = 0.dp),
                 enabled =
                 user.text.isNotEmpty() &&
                         password.text.isNotEmpty() &&

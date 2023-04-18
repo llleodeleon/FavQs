@@ -31,7 +31,6 @@ class PrefsRepo(private val dataStore: DataStore<Preferences>) : IPrefsRepo {
         val token = stringPreferencesKey("token")
     }
 
-    private val moshi = Moshi.Builder().build()
     override val appPrefsFlow: Flow<AppPrefs> = dataStore.data
         .catch { exception ->
             if (exception is IOException) {

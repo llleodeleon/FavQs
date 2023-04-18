@@ -17,7 +17,7 @@ import com.leodeleon.favqs.presentation.LoginViewModel
 
 @Composable
 fun AppNavHost(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     loginVM: LoginViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController(),
 ) {
